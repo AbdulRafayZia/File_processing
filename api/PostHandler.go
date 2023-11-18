@@ -27,24 +27,31 @@ type ResponseBody struct {
 
 func HandlePostRequest(w http.ResponseWriter, r *http.Request) {
 	startTime := time.Now()
-	var requestBody RequestBody
-
-	// Decode the JSON payload
-	decoder := json.NewDecoder(r.Body)
-	err := decoder.Decode(&requestBody)
-	if err != nil {
-		http.Error(w, "Invalid request body", http.StatusBadRequest)
-		return
-	}
-
-
-	file, handler, err := r.FormFile("file")
-	if err != nil {
-		fmt.Println("error while getting the File")
-		fmt.Println(err)
-		return
-	}
-	defer file.Close()
+		// Read the request body into a variable
+		bodyBytes, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			http.Error(w, "Error reading request body", http.StatusInternalServerError)
+			return
+		}
+		defer r.Body.Close()
+	
+		// Unmarshal the JSON payload
+		var requestBody RequestBody
+		err = json.Unmarshal(bodyBytes, &requestBody)
+		if err != nil {
+			http.Error(w, "Invalid JSON payload", http.StatusBadRequest)
+			return
+		}
+	
+		// Process the file upload
+		file, handler, err := r.FormFile("file")
+		if err != nil {
+			fmt.Println("Error while getting the file")
+			fmt.Println(err)
+			http.Error(w, "Error retrieving file", http.StatusBadRequest)
+			return
+		}
+		defer file.Close()
 	// Create a new file in the server's upload directory
 	filePath := filepath.Join("uploads", handler.Filename)
 	dst, err := os.Create(filePath)
