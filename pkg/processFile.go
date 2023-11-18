@@ -1,27 +1,27 @@
 package pkg
 
 import (
-	// "io/ioutil"
-	
+	"io/ioutil"
+	"log"
 	"sync"
 )
-func ProcessFile( Routines int, FileData string) Summary {
+func ProcessFile( routines int) Summary {
 	var summary Summary
 	var wg sync.WaitGroup
     channal := make(chan Summary)
-    // content, err := ioutil.ReadFile("D:/gorilla/assests/file.txt")
-    // if err != nil {
-    //     log.Fatal(err)
-    // }
-    // FileData := string(content)
-    chunk := len(FileData) / Routines
+    content, err := ioutil.ReadFile("D:/gorilla/assests/file.txt")
+    if err != nil {
+        log.Fatal(err)
+    }
+    fileData := string(content)
+    chunk := len(fileData) / routines
     startIndex := 0
     endIndex := chunk
-    for iterations := 0; iterations < Routines; iterations++ {
+    for iterations := 0; iterations < routines; iterations++ {
 		wg.Add(1)
 		go func(start, end int) {
 			defer wg.Done()
-			Counts(FileData[start:end], channal)
+			Counts(fileData[start:end], channal)
 		}(startIndex, endIndex)
         // go Counts(fileData[startIndex:endIndex], channal)
         startIndex = endIndex
