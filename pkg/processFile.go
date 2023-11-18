@@ -1,19 +1,20 @@
 package pkg
 
 import (
-	"io/ioutil"
-	"log"
+	// "io/ioutil"
+	// "log"
 	"sync"
 )
-func ProcessFile( routines int) Summary {
+func ProcessFile( fileData string, routines int) Summary {
+
 	var summary Summary
 	var wg sync.WaitGroup
     channal := make(chan Summary)
-    content, err := ioutil.ReadFile("D:/gorilla/assests/file.txt")
-    if err != nil {
-        log.Fatal(err)
-    }
-    fileData := string(content)
+    // content, err := ioutil.ReadFile("D:/gorilla/assests/file.txt")
+    // if err != nil {
+    //     log.Fatal(err)
+    // }
+    // fileData := string(content)
     chunk := len(fileData) / routines
     startIndex := 0
     endIndex := chunk
