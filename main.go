@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/gorilla/mux"
 	"gorilla/pkg"
-	"ioutil"
+	"io/ioutil"
 	"log"
+
+	
+	"github.com/gorilla/mux"
 )
 
 // RequestBody is the structure for the incoming JSON payload
@@ -18,13 +20,18 @@ type RequestBody struct {
 
 // ResponseBody is the structure for the outgoing JSON response
 type ResponseBody struct {
-	Result int `json:"result"`
+	TotalLines int `json:"TotalLines"`
+	TotalWords int `json:"TotalWords"`
+	TotalPuncuations int `json:"TotalPuncuations"`
+	TotalVowels int `json:"TotalVowels"`
+
+
 }
 
 // YourFunction is the function that processes the input and returns a result
-func processFile( routines int) {
+func processFile( routines int) pkg.Summary {
     channal := make(chan pkg.Summary)
-    content, err := ioutil.ReadFile(filePath)
+    content, err := ioutil.ReadFile("D:/gorilla/assests/file.txt")
     if err != nil {
         log.Fatal(err)
     }
@@ -37,14 +44,20 @@ func processFile( routines int) {
         startIndex = endIndex
         endIndex += chunk
     }
+	var summary pkg.Summary
     for iterations := 0; iterations < routines; iterations++ {
         counts := <-channal
-        fmt.Printf("number of lines of chunk %d: %d \n", iterations+1, counts.LineCount)
-        fmt.Printf("number of words of chunk %d: %d \n", iterations+1, counts.WordsCount)
-        fmt.Printf("number of vowels of chunk %d: %d \n", iterations+1, counts.VowelsCount)
-        fmt.Printf("number of puncuations of chunk %d: %d \n", iterations+1, counts.PuncuationsCount)
+        // fmt.Printf("number of lines of chunk %d: %d \n", iterations+1, counts.LineCount)
+        // fmt.Printf("number of words of chunk %d: %d \n", iterations+1, counts.WordsCount)
+        // fmt.Printf("number of vowels of chunk %d: %d \n", iterations+1, counts.VowelsCount)
+        // fmt.Printf("number of puncuations of chunk %d: %d \n", iterations+1, counts.PuncuationsCount)
+		summary.LineCount+=counts.LineCount;
+		summary.WordsCount+=counts.WordsCount;
+		summary.VowelsCount+=counts.VowelsCount;
+		summary.PuncuationsCount+=counts.PuncuationsCount;
+
     }
-	return endIndex
+	return summary
 }
 
 // HandlePostRequest handles the POST request and calls YourFunction
@@ -64,7 +77,10 @@ func HandlePostRequest(w http.ResponseWriter, r *http.Request) {
 
 	// Create the response payload
 	responseBody := ResponseBody{
-		Result: result,
+		TotalLines : result.LineCount,
+		TotalWords:result.WordsCount ,
+		TotalVowels: result.VowelsCount,
+		TotalPuncuations: result.PuncuationsCount,
 	}
 
 	// Encode and send the response
