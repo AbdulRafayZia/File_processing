@@ -27,7 +27,7 @@
 	func HandlePostRequest(w http.ResponseWriter, r *http.Request) {
 		startTime := time.Now()
 		 
-		routines:=GetJsonData(w , r)
+		// routines:=GetJsonData(w , r)
 			// Parse the multipart form data
 		// err := r.ParseMultipartForm(10 << 20) // 10 MB limit
 		// if err != nil {
@@ -66,8 +66,8 @@
 		}
 		fileData:=  string(contents)
 		// Call YourFunction with the provided value
-		// result := pkg.ProcessFile(fileData)
-		result := pkg.ProcessFile(fileData , routines)
+		result := pkg.ProcessFile(fileData)
+		// result := pkg.ProcessFile(fileData , routines)
 
 		// Create the response payload
 		responseBody := ResponseBody{
@@ -87,16 +87,16 @@
 		executionTime := endTime.Sub(startTime)
 		fmt.Printf("Execution time: %v\n", executionTime)
 	}
-func GetJsonData(w http.ResponseWriter, r  *http.Request) int  {
-	var requestBody RequestBody
+// func GetJsonData(w http.ResponseWriter, r  *http.Request) int  {
+// 	var requestBody RequestBody
 
-		// Decode the JSON payload
-		decoder := json.NewDecoder(r.Body)
-		err := decoder.Decode(&requestBody)
-		if err != nil {
-			http.Error(w, "Invalid request body", http.StatusBadRequest)
-			return 0
-		}
-		return requestBody.Routines
+// 		// Decode the JSON payload
+// 		decoder := json.NewDecoder(r.Body)
+// 		err := decoder.Decode(&requestBody)
+// 		if err != nil {
+// 			http.Error(w, "Invalid request body", http.StatusBadRequest)
+// 			return 0
+// 		}
+// 		return requestBody.Routines
 	
-}
+// }
