@@ -84,9 +84,6 @@ func HandlePostRequest(w http.ResponseWriter, r *http.Request) {
 		TotalPuncuations: result.PuncuationsCount,
 	}
 
-
-
-	
 	// Encode and send the response
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
