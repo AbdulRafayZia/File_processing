@@ -56,6 +56,7 @@ func HandlePostRequest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer dst.Close()
+	
 
 		// Copy the file content to the new file
 		_, err = io.Copy(dst, file)
