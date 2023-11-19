@@ -5,8 +5,8 @@ import (
 	// "log"
 	"sync"
 )
-func ProcessFile( fileData string) Summary {
-    routines:=1
+func ProcessFile( fileData string , routines int) Summary {
+    // routines:=1
 	var summary Summary
 	var wg sync.WaitGroup
     channal := make(chan Summary)
