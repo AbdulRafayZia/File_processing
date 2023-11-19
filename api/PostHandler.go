@@ -56,7 +56,7 @@ func HandlePostRequest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer dst.Close()
-	
+
 
 		// Copy the file content to the new file
 		_, err = io.Copy(dst, file)
@@ -73,6 +73,8 @@ func HandlePostRequest(w http.ResponseWriter, r *http.Request) {
 	// fmt.Printf("data :%s\n", fileData)
 
 	result := pkg.ProcessFile( fileData , routines)
+
+	
 
 	// Create the response payload
 	responseBody := ResponseBody{
