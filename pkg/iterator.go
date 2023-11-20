@@ -1,25 +1,20 @@
-// mypackage/summary.go
+
 package pkg
 
-type Summary struct {
-	LineCount        int
-	WordsCount       int
-	VowelsCount      int
-	PuncuationsCount int
-}
 
-func Counts(data string, channal chan Summary) {
+
+func Counts(data string, channal chan  Summary) {
 	DocCounts := Summary{}
 
-	for _, words := range data {
+	for _, char := range data {
 		switch {
-		case words == '\n':
+		case char == '\n':
 			DocCounts.LineCount++
-		case words == 32:
+		case char == 32:
 			DocCounts.WordsCount++
-		case words == 65 || words == 69 || words == 73 || words == 79 || words == 85 || words == 97 || words == 101 || words == 105 || words == 111 || words == 117:
+		case char == 65 || char == 69 || char == 73 || char == 79 || char == 85 || char == 97 || char == 101 || char == 105 || char == 111 || char == 117:
 			DocCounts.VowelsCount++
-		case (words >= 33 && words <= 47) || (words >= 58 && words <= 64) || (words >= 91 && words <= 96) || (words >= 123 && words <= 126):
+		case (char >= 33 && char <= 47) || (char >= 58 && char <= 64) || (char >= 91 && char <= 96) || (char >= 123 && char <= 126):
 			DocCounts.PuncuationsCount++
 		}
 	}

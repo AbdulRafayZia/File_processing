@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"gorilla/pkg"
+	"github.com/AbdulRafayZia/Gorilla-mux/pkg"
 	"io"
 	// "io/ioutil"
 	"net/http"

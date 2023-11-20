@@ -1,8 +1,6 @@
 package pkg
 
 import (
-	// "io/ioutil"
-	// "log"
 	"sync"
 )
 func ProcessFile( fileData string , routines int) Summary {

@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"gorilla/api"
+	"github.com/AbdulRafayZia/Gorilla-mux/api"
 	"github.com/gorilla/mux"
 
 )

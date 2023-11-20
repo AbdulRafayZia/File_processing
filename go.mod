@@ -1,4 +1,4 @@
-module gorilla
+module github.com/AbdulRafayZia/Gorilla-mux
 
 go 1.21.1
 
