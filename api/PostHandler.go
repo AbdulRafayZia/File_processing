@@ -20,13 +20,13 @@ type ResponseBody struct {
 	TotalWords       int           `json:"Total no of Words"`
 	TotalPuncuations int           `json:"Totalno of Puncuations"`
 	TotalVowels      int           `json:"Total no of Vowels"`
-	ExecutionTime    time.Duration `json:"ExecutionTime"`
+	ExecutionTime    string `json:"ExecutionTime"`
 	Routines         int           `json:"No of Routines"`
 }
 
 func HandlePostRequest(w http.ResponseWriter, r *http.Request) {
 	startTime := time.Now()
-	err := r.ParseMultipartForm(1000 << 20) // 1000 MB max file size
+	err := r.ParseMultipartForm(10000 << 20) // 10000 MB max file size
 	if err != nil {
 		http.Error(w, "Failed to parse form data", http.StatusBadRequest)
 		return
@@ -49,32 +49,34 @@ func HandlePostRequest(w http.ResponseWriter, r *http.Request) {
 	}
 	defer file.Close()
 
-	buf := bytes.NewBuffer(nil)
-	if _, err := io.Copy(buf, file); err != nil {
+	var fileContent bytes.Buffer
+	_, err = io.Copy(&fileContent, file)
+	if err != nil {
+		http.Error(w, "Failed to read file", http.StatusInternalServerError)
 		return
 	}
 
-	fileData := buf.String()
-
-	result := pkg.ProcessFile(fileData, routines)
+	// Process file
+	result := pkg.ProcessFile(fileContent.String(), routines)
 
 	endTime := time.Now()
 
 	// Calculate the execution time
 	executionTime := endTime.Sub(startTime)
+	TimeInSec:= executionTime.String()
 	responseBody := ResponseBody{
 		TotalLines:       result.LineCount,
 		TotalWords:       result.WordsCount,
 		TotalVowels:      result.VowelsCount,
 		TotalPuncuations: result.PuncuationsCount,
-		ExecutionTime:    executionTime,
+		ExecutionTime:    TimeInSec,
 		Routines:         routines,
 	}
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(responseBody)
 
-	w.WriteHeader(http.StatusOK)
+	// w.WriteHeader(http.StatusOK)
 
 	fmt.Printf("Execution time: %v\n", executionTime)
 	// json.NewEncoder(w).Encode(executionTime)
