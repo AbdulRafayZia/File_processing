@@ -48,40 +48,15 @@ func HandlePostRequest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer file.Close()
-	// Create a new file in the server's upload directory
-
-	// filePath := filepath.Join("./assests", handler.Filename)
-	// dst, err := os.Create(filePath)
-	// if err != nil {
-	// 	http.Error(w, "Unable to create the file for writing", http.StatusInternalServerError)
-	// 	return
-	// }
-	// defer dst.Close()
 
 	buf := bytes.NewBuffer(nil)
-if _, err := io.Copy(buf, file); err != nil {
-    return 
-}
+	if _, err := io.Copy(buf, file); err != nil {
+		return
+	}
 
-	// Copy the file content to the new file
-	// _, err = io.Copy(dst, file)
-	// if err != nil {
-	// 	http.Error(w, "Unable to write the file", http.StatusInternalServerError)
-	// 	return
-	// }
-	// fileBytes, err := buf.ReadByte()
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
 	fileData := buf.String()
 
-	// fmt.Printf("data :%s\n", fileData)
-
 	result := pkg.ProcessFile(fileData, routines)
-
-	// Create the response payload
-
-	// Encode and send the response
 
 	endTime := time.Now()
 
