@@ -3,20 +3,13 @@ package main
 import (
 	"fmt"
 	"net/http"
-
 	"gorilla/api"
-
-
-	
 	"github.com/gorilla/mux"
 
 )
 
 
 
-// YourFunction is the function that processes the input and returns a result
-
-// HandlePostRequest handles the POST request and calls YourFunction
 
 func main() {
 	
