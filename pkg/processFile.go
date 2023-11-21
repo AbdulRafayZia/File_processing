@@ -29,7 +29,7 @@ func ProcessFile(fileData string, routines int) Summary {
 	}()
 
 	// Receive results from the channel and aggregate them
-	for counts := range channal {
+	for counts := range channel {
 		summary.LineCount += counts.LineCount
 		summary.WordsCount += counts.WordsCount
 		summary.VowelsCount += counts.VowelsCount
