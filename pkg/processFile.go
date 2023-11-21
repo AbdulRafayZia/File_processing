@@ -3,28 +3,29 @@ package pkg
 import (
 	"sync"
 )
-func ProcessFile( fileData string , routines int) Summary {
+
+func ProcessFile(fileData string, routines int) Summary {
 	var summary Summary
 	var wg sync.WaitGroup
-    channal := make(chan Summary)
-    chunk := len(fileData) / routines
-    startIndex := 0
-    endIndex := chunk
-    for iterations := 0; iterations < routines; iterations++ {
+	channel := make(chan Summary)
+	chunk := len(fileData) / routines
+	startIndex := 0
+	endIndex := chunk
+	for iterations := 0; iterations < routines; iterations++ {
 		wg.Add(1)
 		go func(start, end int) {
 			defer wg.Done()
-			Counts(fileData[start:end], channal)
+			Counts(fileData[start:end], channel)
 		}(startIndex, endIndex)
-        // go Counts(fileData[startIndex:endIndex], channal)
-        startIndex = endIndex
-        endIndex += chunk
-      
-    }
+		// go Counts(fileData[startIndex:endIndex], channal)
+		startIndex = endIndex
+		endIndex += chunk
+
+	}
 	// Close the channel once all goroutines are done
 	go func() {
 		wg.Wait()
-		close(channal)
+		close(channel)
 	}()
 
 	// Receive results from the channel and aggregate them
@@ -34,6 +35,6 @@ func ProcessFile( fileData string , routines int) Summary {
 		summary.VowelsCount += counts.VowelsCount
 		summary.PuncuationsCount += counts.PuncuationsCount
 	}
-	
+
 	return summary
 }

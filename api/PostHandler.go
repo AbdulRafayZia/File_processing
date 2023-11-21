@@ -4,24 +4,23 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/AbdulRafayZia/Gorilla-mux/pkg"
 	"io"
-	// "io/ioutil"
+
+	"github.com/AbdulRafayZia/Gorilla-mux/pkg"
 	"net/http"
-	// "os"
-	// "path/filepath"
+
 	"strconv"
 	"time"
 )
 
 // ResponseBody is the structure for the outgoing JSON response
 type ResponseBody struct {
-	TotalLines       int           `json:"Total no of Lines"`
-	TotalWords       int           `json:"Total no of Words"`
-	TotalPuncuations int           `json:"Totalno of Puncuations"`
-	TotalVowels      int           `json:"Total no of Vowels"`
-	ExecutionTime    string `json:"ExecutionTime"`
-	Routines         int           `json:"No of Routines"`
+	TotalLines       int    `json:"Total_lines"`
+	TotalWords       int    `json:"Total_words"`
+	TotalPuncuations int    `json:"Total_puncuations"`
+	TotalVowels      int    `json:"Total_vowels"`
+	ExecutionTime    string `json:"Execution_Time"`
+	Routines         int    `json:"No_of_Routines"`
 }
 
 func HandlePostRequest(w http.ResponseWriter, r *http.Request) {
@@ -63,7 +62,7 @@ func HandlePostRequest(w http.ResponseWriter, r *http.Request) {
 
 	// Calculate the execution time
 	executionTime := endTime.Sub(startTime)
-	TimeInSec:= executionTime.String()
+	TimeInSec := executionTime.String()
 	responseBody := ResponseBody{
 		TotalLines:       result.LineCount,
 		TotalWords:       result.WordsCount,
@@ -76,8 +75,8 @@ func HandlePostRequest(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(responseBody)
 
-	// w.WriteHeader(http.StatusOK)
+
 
 	fmt.Printf("Execution time: %v\n", executionTime)
-	// json.NewEncoder(w).Encode(executionTime)
+
 }
