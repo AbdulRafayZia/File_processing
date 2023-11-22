@@ -44,7 +44,7 @@ The `utils` package contains utility structs and functions used across the proje
 
 ## Getting Started
 
-1. Clone the repository: `git clone https://github.com/yourusername/yourproject.git`
+1. Clone the repository: `git clone https://github.com/AbdulRafayZia/Gorilla_mux.git`
 2. Install dependencies: `go mod tidy`
 3. Run the application: `go run main.go`
 
@@ -65,25 +65,4 @@ The `utils` package contains utility structs and functions used across the proje
 - **Method**: GET
 - **Authentication**: Requires a valid JWT token
 
-## Examples
 
-### 1. File Processing
-
-```bash
-curl -X POST -H "Authorization: Bearer YOUR_JWT_TOKEN" -H "Content-Type: application/json" -d '{"filepath": "example.txt"}' http://localhost:8080/process-file
-```
-
-### 2. Authentication
-
-```bash
-curl -X POST -H "Content-Type: application/json" -d '{"username": "yourusername", "password": "yourpassword"}' http://localhost:8080/login
-```
-
-### 3. Authorization
-
-```bash
-curl -H "Authorization: Bearer YOUR_JWT_TOKEN" http://localhost:8080/protected
-```
-
-Feel free to customize this README according to your project's specific details and requirements.
-```
