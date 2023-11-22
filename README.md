@@ -34,43 +34,13 @@ The `login` package provides JWT token-based authentication and authorization.
 
 #### Usage
 
-```go
-// Import the package
-import "github.com/yourusername/yourproject/login"
 
-// Example: Authenticate user and generate token
-token, err := login.AuthenticateUser("username", "password")
-if err != nil {
-    // Handle authentication failure
-}
-
-// Example: Validate token for authorization
-if login.ValidateToken(token) {
-    // Token is valid, proceed with authorized actions
-} else {
-    // Token is invalid, deny access
-}
-```
 
 ### 3. `utils`
 
 The `utils` package contains utility structs and functions used across the project.
 
-#### Usage
 
-```go
-// Import the package
-import "github.com/yourusername/yourproject/utils"
-
-// Example: Define a custom error type
-err := utils.NewError("This is a custom error")
-
-// Example: Log information
-utils.LogInfo("This is an informational message")
-
-// Example: Log error
-utils.LogError("This is an error message", err)
-```
 
 ## Getting Started
 
@@ -80,12 +50,7 @@ utils.LogError("This is an error message", err)
 
 ## API Endpoints
 
-### 1. File Processing
 
-- **Endpoint**: `/process-file`
-- **Method**: POST
-- **Request Body**: JSON containing the file path
-- **Authentication**: Requires a valid JWT token
 
 ### 2. Authentication
 
