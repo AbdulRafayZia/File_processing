@@ -1,4 +1,4 @@
-package filehandle
+package utils
 type ResponseBody struct {
 	TotalLines       int    `json:"Total_lines"`
 	TotalWords       int    `json:"Total_words"`

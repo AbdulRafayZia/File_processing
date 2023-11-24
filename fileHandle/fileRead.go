@@ -1,15 +1,18 @@
-
 package filehandle
+
 import (
 	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
-	"github.com/AbdulRafayZia/Gorilla-mux/pkg"
+
+	// "github.com/AbdulRafayZia/Gorilla-mux/pkg"
 	"net/http"
 
 	"strconv"
 	"time"
+
+	"github.com/AbdulRafayZia/Gorilla-mux/utils"
 )
 
 
@@ -47,14 +50,14 @@ import (
 	}
 
 	// Process file
-	result := pkg.ProcessFile(fileContent.String(), routines)
+	result := ProcessFile(fileContent.String(), routines)
 
 	endTime := time.Now()
 
 	// Calculate the execution time
 	executionTime := endTime.Sub(startTime)
 	TimeInSec := executionTime.String()
-	responseBody := ResponseBody{
+	responseBody := utils.ResponseBody{
 		TotalLines:       result.LineCount,
 		TotalWords:       result.WordsCount,
 		TotalVowels:      result.VowelsCount,

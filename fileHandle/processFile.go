@@ -1,13 +1,15 @@
-package pkg
+package filehandle
 
 import (
 	"sync"
+
+	"github.com/AbdulRafayZia/Gorilla-mux/utils"
 )
 
-func ProcessFile(fileData string, routines int) Summary {
-	var summary Summary
+func ProcessFile(fileData string, routines int) utils.Summary {
+	var summary utils.Summary
 	var wg sync.WaitGroup
-	channel := make(chan Summary)
+	channel := make(chan utils.Summary)
 	chunk := len(fileData) / routines
 	startIndex := 0
 	endIndex := chunk

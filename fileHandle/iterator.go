@@ -1,10 +1,11 @@
+package filehandle
 
-package pkg
+import "github.com/AbdulRafayZia/Gorilla-mux/utils"
 
 
 
-func Counts(data string, channal chan  Summary) {
-	DocCounts := Summary{}
+func Counts(data string, channal chan  utils.Summary) {
+	DocCounts := utils.Summary{}
 
 	for _, char := range data {
 		switch {

@@ -1,4 +1,4 @@
-package pkg
+package utils
 type Summary struct {
 	LineCount        int
 	WordsCount       int
