@@ -8,7 +8,7 @@ import (
 
 	// "golang.org/x/crypto/bcrypt"
 
-	filehandle "github.com/AbdulRafayZia/Gorilla-mux/fileHandle"
+	filehandle "github.com/AbdulRafayZia/Gorilla-mux/internal/app/fileHandle"
 )
 func ProtectedHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")

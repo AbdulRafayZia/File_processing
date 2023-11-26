@@ -1,6 +1,7 @@
 package filehandle
 
-import "github.com/AbdulRafayZia/Gorilla-mux/utils"
+import 	 "github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
+
 
 
 

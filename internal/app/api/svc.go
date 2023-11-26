@@ -6,8 +6,7 @@ import (
 	"time"
 	"database/sql"
 	"log"
-	"github.com/AbdulRafayZia/Gorilla-mux/utils"
-
+	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
 	"github.com/dgrijalva/jwt-go"
 )
 
@@ -115,7 +114,7 @@ func GetRole( name string) (string,error)  {
 	 return "", fmt.Errorf("no role for this name")
 	}else if err!=nil{
 		
-      return "", fmt.Errorf("Error retrieving Role : %v", err)
+      return "", fmt.Errorf("Error retrieving Role ")
 	}
 
 

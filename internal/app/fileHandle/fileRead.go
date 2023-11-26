@@ -10,7 +10,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/AbdulRafayZia/Gorilla-mux/utils"
+	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
+
 )
 
 func GetFile(w http.ResponseWriter, r *http.Request) (utils.ResponseBody, error) {

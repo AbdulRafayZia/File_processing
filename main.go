@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/AbdulRafayZia/Gorilla-mux/routes"
+	"github.com/AbdulRafayZia/Gorilla-mux/internal/infrastructure/routes"
 	_ "github.com/lib/pq"
 )
 

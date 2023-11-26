@@ -2,7 +2,7 @@ package routes
 
 import (
 
-	"github.com/AbdulRafayZia/Gorilla-mux/api"
+	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/api"
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq" 
 )
