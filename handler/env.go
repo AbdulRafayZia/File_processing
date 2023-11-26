@@ -1,4 +1,4 @@
-package login
+package handler
 const (
     host     = "localhost"
     port     = 5432

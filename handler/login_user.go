@@ -1,4 +1,4 @@
-package login
+package handler
 
 import (
 	"database/sql"
@@ -6,23 +6,17 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"github.com/AbdulRafayZia/Gorilla-mux/utils"
+
 
 	// "golang.org/x/crypto/bcrypt"
-
-	filehandle "github.com/AbdulRafayZia/Gorilla-mux/fileHandle"
 )
-
-type Credentials struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-	ID       int    `json:"id"`
-}
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Printf("The request body is %v\n", r.Body)
 
-	var resquest Credentials
+	var resquest utils.Credentials
 	json.NewDecoder(r.Body).Decode(&resquest)
 	fmt.Printf("The user request value %v", resquest)
 
@@ -57,8 +51,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func findUserByUsername(username string) (*Credentials, error) {
-	var user Credentials
+func findUserByUsername(username string) (*utils.Credentials, error) {
+	var user utils.Credentials 
 	err := db.QueryRow("SELECT id, username, password FROM users WHERE username = $1", username).Scan(&user.ID, &user.Username, &user.Password)
 	if err == sql.ErrNoRows {
 		return nil, nil // User not found
@@ -95,26 +89,5 @@ func verifyPassword(hash, password string) bool {
 		log.Printf("Error in verify hashed password:")
 		return false
 	}
-
-}
-
-func ProtectedHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	tokenString := r.Header.Get("Authorization")
-	if tokenString == "" {
-		w.WriteHeader(http.StatusUnauthorized)
-		fmt.Fprint(w, "Missing authorization header")
-		return
-	}
-	tokenString = tokenString[len("Bearer "):]
-
-	err := verifyToken(tokenString)
-	if err != nil {
-		w.WriteHeader(http.StatusUnauthorized)
-		fmt.Fprint(w, "Invalid token")
-		return
-	}
-
-	filehandle.GetFile(w, r)
 
 }
