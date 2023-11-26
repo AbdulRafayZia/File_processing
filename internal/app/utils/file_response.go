@@ -8,4 +8,6 @@ type ResponseBody struct {
 	ExecutionTime    string `json:"Execution_Time"`
 	Routines         int    `json:"No_of_Routines"`
 	Filename         string `json:"file_name"`
+	// Id               int    `json:"id"`
+	Username         string `json:"username"`
 }

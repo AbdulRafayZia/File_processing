@@ -33,7 +33,6 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Unable to create user", http.StatusInternalServerError)
 		return
 	}
-
 	// Respond with a success message
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "User created successfully")

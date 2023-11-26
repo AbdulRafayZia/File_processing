@@ -9,9 +9,8 @@ import (
 )
 
 func main() {
-	// defer login.db.Close()
 
-	r:=routes.Routes()
+	r := routes.Routes()
 
 	// Start the server
 	port := 8080
