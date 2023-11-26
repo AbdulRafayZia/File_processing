@@ -1,4 +1,4 @@
-package handler
+package api
 const (
     host     = "localhost"
     port     = 5432

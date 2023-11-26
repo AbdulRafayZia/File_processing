@@ -1,4 +1,4 @@
-package handler
+package api
 
 import (
 	"database/sql"
@@ -16,25 +16,25 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Printf("The request body is %v\n", r.Body)
 
-	var resquest utils.Credentials
-	json.NewDecoder(r.Body).Decode(&resquest)
-	fmt.Printf("The user request value %v", resquest)
+	var request utils.Credentials
+	json.NewDecoder(r.Body).Decode(&request)
+	fmt.Printf("The user request value %v \n", request)
 
-	user, err := findUserByUsername(resquest.Username)
+	user, err := findUserByUsername(request.Username)
 	if err != nil {
 		http.Error(w, "Error finding user", http.StatusInternalServerError)
 		return
 	}
-	hashedPassword, err := getHashedPassword(resquest.Username)
+	hashedPassword, err := getHashedPassword(request.Username)
 	if err != nil {
 		http.Error(w, "error getting hashed password", http.StatusBadRequest)
 		return
 	}
 
 	// Verify the password
-	if user != nil && verifyPassword(hashedPassword, resquest.Password) {
+	if user != nil && verifyPassword(hashedPassword, request.Password) {
 
-		tokenString, err := CreateToken(resquest.Username)
+		tokenString, err := CreateToken(request.Username)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			fmt.Errorf(" Error in Generating Token")

@@ -1,4 +1,5 @@
 package utils
+
 type ResponseBody struct {
 	TotalLines       int    `json:"Total_lines"`
 	TotalWords       int    `json:"Total_words"`
@@ -6,4 +7,5 @@ type ResponseBody struct {
 	TotalVowels      int    `json:"Total_vowels"`
 	ExecutionTime    string `json:"Execution_Time"`
 	Routines         int    `json:"No_of_Routines"`
+	Filename         string `json:"file_name"`
 }

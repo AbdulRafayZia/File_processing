@@ -1,4 +1,4 @@
-package handler
+package api
 
 import (
 	"encoding/json"
@@ -9,6 +9,8 @@ import (
 type Users struct {
 	Name     string `json:"name"`
 	Password string `json: "password"`
+	Role string `json: "password"`
+	
 }
 
 func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
@@ -18,6 +20,9 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 
 	var u Users
 	err := json.NewDecoder(r.Body).Decode(&u)
+	if err!=nil{
+		http.Error(w, "Unable to get data", http.StatusBadRequest)
+	}
 	fmt.Printf("The user request value %v", u)
 
 	// Extract user information from the form
