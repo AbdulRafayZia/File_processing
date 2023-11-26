@@ -1,39 +1,43 @@
 package api
 
 import (
+	
 	"encoding/json"
 	"fmt"
-
+	
 	"net/http"
-
 	"github.com/AbdulRafayZia/Gorilla-mux/utils"
+
+
 	// "golang.org/x/crypto/bcrypt"
 )
 
-func LoginHandler(w http.ResponseWriter, r *http.Request) {
+
+func StaffLogin(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Printf("The request body is %v\n", r.Body)
 
 	var request utils.Credentials
 	json.NewDecoder(r.Body).Decode(&request)
+	fmt.Printf("The user request value %v \n", request)
+
 	
 
 	role,err:=GetRole(request.Username)
 	if err!=nil{
 		w.WriteHeader(http.StatusUnauthorized)
-		fmt.Errorf("Unauthorize perosn")
+		http.Error(w, "Unauthozied username", http.StatusUnauthorized)
+
 		return
 	}
 	 var  validRole bool
-	if role=="user"{
+	if role=="staff"{
 		validRole=true
 	}else{
 		validRole=false
 	}
 	if !validRole {
-
-		w.WriteHeader(http.StatusBadRequest)
-		fmt.Errorf("Not a Staff member  ")
+		http.Error(w, "Not a Staff Member", http.StatusUnauthorized)
 		return
 
 	}
@@ -49,7 +53,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Verify the password
+
 	validPassword := VerifyPassword(hashedPassword, request.Password)
 	if !validPassword {
 
@@ -58,7 +62,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 
 	}
-	if user != nil && validPassword {
+	if user != nil && validPassword && validRole {
 
 		tokenString, err := CreateToken(request.Username , role)
 		if err != nil {
@@ -76,3 +80,6 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
+
+
+

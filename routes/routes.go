@@ -12,6 +12,8 @@ func Routes() *mux.Router{
 	r.HandleFunc("/login", api.LoginHandler).Methods("POST")
 	r.HandleFunc("/protected", api.ProtectedHandler).Methods("POST")
 	r.HandleFunc("/signup", api.CreateUserHandler).Methods("POST")
+	r.HandleFunc("/staffLogin", api.StaffLogin).Methods("POST")
+
 	return r
 
 }

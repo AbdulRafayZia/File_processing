@@ -9,7 +9,7 @@ import (
 type Users struct {
 	Name     string `json:"name"`
 	Password string `json: "password"`
-	Role string `json: "password"`
+	Role string `json: "role"`
 	
 }
 
@@ -28,7 +28,7 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 	// Extract user information from the form
 
 	// Insert the user into the database
-	_, err = db.Exec("INSERT INTO users (username, password) VALUES ($1, $2)", u.Name, u.Password)
+	_, err = db.Exec("INSERT INTO users (username, password) VALUES ($1, $2)", u.Name, u.Password , u.Role)
 	if err != nil {
 		http.Error(w, "Unable to create user", http.StatusInternalServerError)
 		return

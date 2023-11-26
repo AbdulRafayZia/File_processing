@@ -1,12 +1,13 @@
 package api
 
-// LoginService to provide user login with JWT token support
 import (
 	"fmt"
 	"strings"
 	"time"
+	"database/sql"
+	"log"
+	"github.com/AbdulRafayZia/Gorilla-mux/utils"
 
-	// "github.com/golang-jwt/jwt/v5"
 	"github.com/dgrijalva/jwt-go"
 )
 
@@ -20,10 +21,11 @@ type MyClaims struct {
 	jwt.StandardClaims
 }
 
-func CreateToken(username string) (string, error) {
+func CreateToken(username string , role string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256,
 		jwt.MapClaims{
 			"username": username,
+			"role": role,
 			"exp":      time.Now().Add(time.Hour * 24).Unix(),
 		})
 	tokenString, err := token.SignedString(secretKey)
@@ -33,18 +35,7 @@ func CreateToken(username string) (string, error) {
 	return tokenString, nil
 }
 
-//	func verifyToken(tokenString string) error {
-//		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-//			return secretKey, nil
-//		})
-//		if err != nil {
-//			return err
-//		}
-//		if !token.Valid {
-//			return fmt.Errorf("Invalid token")
-//		}
-//		return nil
-//	}
+
 func verifyToken(tokenString string) (*MyClaims, error) {
 	tokenString = strings.TrimSpace(tokenString)
 
@@ -77,4 +68,60 @@ func verifyToken(tokenString string) (*MyClaims, error) {
 	}
 
 	return claims, nil
+}
+
+
+func FindByName(username string) (*utils.Credentials, error) {
+	var user utils.Credentials 
+	err := db.QueryRow("SELECT id, username, password FROM users WHERE username = $1", username).Scan(&user.ID, &user.Username, &user.Password)
+	if err == sql.ErrNoRows {
+		return nil, nil // User not found
+	} else if err != nil {
+		return nil, err // Other error
+	}
+	return &user, nil
+}
+
+func GetPassword(username string) (string, error) {
+	var hashedPassword string
+	err := db.QueryRow("SELECT password FROM users WHERE username = $1", username).Scan(&hashedPassword)
+	if err == sql.ErrNoRows {
+		return "", fmt.Errorf("user not found")
+	} else if err != nil {
+		log.Printf("Error retrieving hashed password: %v", err)
+		return "", err
+	}
+	return hashedPassword, nil
+}
+func VerifyPassword(hash, password string) bool {
+	
+
+	if hash == password {
+		return true
+	} else {
+		log.Printf("Error in verify hashed password:")
+		return false
+	}
+
+
+}
+
+func GetRole( name string) (string,error)  {
+	var Role string
+
+	err := db.QueryRow("SELECT role FROM users WHERE username = $1", name).Scan(&Role)
+	if err==sql.ErrNoRows{
+	 
+	 return "", fmt.Errorf("no role for this name")
+	}else if err!=nil{
+		
+      return "", fmt.Errorf("Error retrieving Role : %v", err)
+	}
+
+
+	return Role,nil
+
+
+
+	
 }
