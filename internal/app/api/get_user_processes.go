@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
+	database "github.com/AbdulRafayZia/Gorilla-mux/internal/infrastructure/Database"
 )
 
 func GetUsersProcessses(w http.ResponseWriter, r *http.Request) {
@@ -25,6 +26,8 @@ func GetUsersProcessses(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, "Could not Get Claims")
 		return
 	}
+	db:=database.OpenDB()
+	defer db.Close()
 	rows, err := db.Query("SELECT * FROM file_processing_data WHERE username = $1", Claims.Username)
 	if err != nil {
 		log.Fatal(err)

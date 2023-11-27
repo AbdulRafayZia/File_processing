@@ -5,4 +5,7 @@ type Credentials struct {
 	Password string `json:"password"`
 	ID       int    `json:"id"`
 	Role     string `json:"role"`
+
 }
+
+

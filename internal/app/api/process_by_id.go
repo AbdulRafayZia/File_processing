@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
+	database "github.com/AbdulRafayZia/Gorilla-mux/internal/infrastructure/Database"
 	"github.com/gorilla/mux"
 )
 
@@ -29,6 +30,8 @@ func GetProcessById(w http.ResponseWriter, r *http.Request) {
 
 		return
 	}
+	db:=database.OpenDB()
+	defer db.Close()
 	rows, err := db.Query("SELECT * FROM file_processing_data WHERE username = $1 AND id=$2", Claims.Username, id)
 	if err != nil {
 		http.Error(w, " Cannot find Process of this user with provided id ", http.StatusBadRequest)

@@ -1,12 +1,14 @@
 package api
 
 import (
+	"database/sql"
 	"fmt"
+	"log"
 	"strings"
 	"time"
-	"database/sql"
-	"log"
+
 	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
+	database "github.com/AbdulRafayZia/Gorilla-mux/internal/infrastructure/Database"
 	"github.com/dgrijalva/jwt-go"
 )
 
@@ -72,6 +74,8 @@ func verifyToken(tokenString string) (*MyClaims, error) {
 
 func FindByName(username string) (*utils.Credentials, error) {
 	var user utils.Credentials 
+	db:=database.OpenDB()
+	defer db.Close()
 	err := db.QueryRow("SELECT id, username, password FROM users WHERE username = $1", username).Scan(&user.ID, &user.Username, &user.Password)
 	if err == sql.ErrNoRows {
 		return nil, nil // User not found
@@ -83,6 +87,8 @@ func FindByName(username string) (*utils.Credentials, error) {
 
 func GetPassword(username string) (string, error) {
 	var hashedPassword string
+	db:=database.OpenDB()
+	defer db.Close()
 	err := db.QueryRow("SELECT password FROM users WHERE username = $1", username).Scan(&hashedPassword)
 	if err == sql.ErrNoRows {
 		return "", fmt.Errorf("user not found")
@@ -108,6 +114,10 @@ func VerifyPassword(hash, password string) bool {
 func GetRole( name string) (string,error)  {
 	var Role string
 
+
+	db:=database.OpenDB()
+	defer db.Close()
+
 	err := db.QueryRow("SELECT role FROM users WHERE username = $1", name).Scan(&Role)
 	if err==sql.ErrNoRows{
 	 
@@ -122,5 +132,15 @@ func GetRole( name string) (string,error)  {
 
 
 
+	
+}
+
+func CheckRole(role string) bool {
+	
+	if role == "staff" {
+		return true
+	} else {
+		return false
+	}
 	
 }

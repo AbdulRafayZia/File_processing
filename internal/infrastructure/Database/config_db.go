@@ -1,4 +1,6 @@
-package api
+package database
+
+
 
 import (
 	"database/sql"
@@ -10,7 +12,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func openDB() *sql.DB {
+func OpenDB() *sql.DB {
 
 	host := getEnv("DB_HOST", "localhost")
 	port := getEnvInt("DB_PORT", 5432)
@@ -34,7 +36,7 @@ func openDB() *sql.DB {
 	return db
 }
 
-var db *sql.DB
+// var db *sql.DB
 
 func getEnv(key, defaultValue string) string {
 	value, exists := os.LookupEnv(key)
@@ -57,7 +59,4 @@ func getEnvInt(key string, defaultValue int) int {
 	return value
 }
 
-func init() {
-	// Open a connection to the database when the application starts
-	db = openDB()
-}
+
