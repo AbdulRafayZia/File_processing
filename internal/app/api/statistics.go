@@ -6,6 +6,7 @@ import (
 
 	"net/http"
 
+	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/service"
 	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
 	database "github.com/AbdulRafayZia/Gorilla-mux/internal/infrastructure/Database"
 )
@@ -34,14 +35,14 @@ func Statistics(w http.ResponseWriter, r *http.Request) {
 	}
 	tokenString = tokenString[len("Bearer"):]
 
-	Claims, err := verifyToken(tokenString)
+	Claims, err := service.VerifyToken(tokenString)
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
 		http.Error(w, " Could not get Claims ", http.StatusUnauthorized)
 
 		return
 	}
-	validrole := CheckRole(Claims.Role)
+	validrole :=service.CheckRole(Claims.Role)
 	if !validrole {
 		http.Error(w, "Not a Staff Member", http.StatusUnauthorized)
 		return

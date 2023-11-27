@@ -9,6 +9,7 @@ import (
 	"net/http"
 
 	// "golang.org/x/crypto/bcrypt"
+	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/service"
 	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
 	database "github.com/AbdulRafayZia/Gorilla-mux/internal/infrastructure/Database"
 
@@ -25,7 +26,7 @@ func ProcessFile(w http.ResponseWriter, r *http.Request) {
 	}
 	tokenString = tokenString[len("Bearer"):]
 
-	Claims, err := verifyToken(tokenString)
+	Claims, err := service.VerifyToken(tokenString)
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
 		fmt.Fprint(w, "Could not Get Claims")

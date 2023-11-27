@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"net/http"
+	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/service"
 
 	 "github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
 
@@ -19,7 +20,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewDecoder(r.Body).Decode(&request)
 	
 
-	role,err:=GetRole(request.Username)
+	role,err:=service.GetRole(request.Username)
 	if err!=nil{
 		w.WriteHeader(http.StatusUnauthorized)
 		http.Error(w, "Unauthozied username", http.StatusUnauthorized)
@@ -39,19 +40,19 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	user, err := FindByName(request.Username)
+	user, err := service.FindByName(request.Username)
 	if err != nil {
 		http.Error(w, "Error finding user", http.StatusInternalServerError)
 		return
 	}
-	hashedPassword, err := GetPassword(request.Username)
+	hashedPassword, err :=service.GetPassword(request.Username)
 	if err != nil {
 		http.Error(w, "error getting hashed password", http.StatusBadRequest)
 		return
 	}
 
 	// Verify the password
-	validPassword := VerifyPassword(hashedPassword, request.Password)
+	validPassword := service.VerifyPassword(hashedPassword, request.Password)
 	if !validPassword {
 
 		w.WriteHeader(http.StatusBadRequest)
@@ -61,7 +62,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if user != nil && validPassword {
 
-		tokenString, err := CreateToken(request.Username , role)
+		tokenString, err := service.CreateToken(request.Username , role)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			http.Error(w, "error in generating toke ", http.StatusInternalServerError)
