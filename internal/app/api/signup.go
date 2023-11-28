@@ -33,7 +33,7 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 	// Insert the user into the database
 	db:=database.OpenDB()
 	defer db.Close()
-	_, err = db.Exec("INSERT INTO users (username, password) VALUES ($1, $2)", request.Username, request.Password , request.Role)
+	_, err = db.Exec("INSERT INTO users (username, password) VALUES ($1, $2)", request.Username, request.Password)
 	if err != nil {
 		http.Error(w, "Unable to create user", http.StatusInternalServerError)
 		return

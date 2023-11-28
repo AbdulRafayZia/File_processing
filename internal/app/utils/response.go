@@ -10,9 +10,12 @@ type ResponseBody struct {
 	Filename         string  `json:"file_name"`
 	// Id               int    `json:"id"`
 	Username string `json:"username"`
-};
-
+}
 
 type ExecutionData struct {
 	AveragTime float64 `json:"average_execution_time"`
-};
+}
+
+type Token struct {
+	Token string `json:"token"`
+}

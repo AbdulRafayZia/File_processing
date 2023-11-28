@@ -2,7 +2,7 @@ package api
 
 import (
 	"encoding/json"
-	"fmt"
+
 
 	"net/http"
 
@@ -12,11 +12,10 @@ import (
 
 func StaffLogin(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	fmt.Printf("The request body is %v\n", r.Body)
+	
 
 	var request utils.Credentials
 	json.NewDecoder(r.Body).Decode(&request)
-	fmt.Printf("The user request value %v \n", request)
 
 	role, err := service.GetRole(request.Username)
 	if err != nil {
@@ -25,12 +24,7 @@ func StaffLogin(w http.ResponseWriter, r *http.Request) {
 
 		return
 	}
-	var validRole bool
-	if role == "staff" {
-		validRole = true
-	} else {
-		validRole = false
-	}
+	validRole := service.CheckStaffRole(role)
 	if !validRole {
 		http.Error(w, "Not a Staff Member", http.StatusUnauthorized)
 		return
@@ -56,21 +50,24 @@ func StaffLogin(w http.ResponseWriter, r *http.Request) {
 		return
 
 	}
-	if user != nil && validPassword && validRole {
-
-		tokenString, err := service.CreateToken(request.Username, role)
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			http.Error(w, "error in generating toke ", http.StatusInternalServerError)
-			return
-		}
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, tokenString)
-		return
-
-	} else {
+	if user == nil && !validPassword && !validRole {
 		w.WriteHeader(http.StatusUnauthorized)
 		http.Error(w, "invalid credentails ", http.StatusUnauthorized)
+
 	}
+
+	tokenString, err := service.CreateToken(request.Username, role)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		http.Error(w, "error in generating toke ", http.StatusInternalServerError)
+		return
+	}
+	
+	token:=utils.Token{
+		Token: tokenString,
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(token)
 
 }

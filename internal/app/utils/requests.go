@@ -8,4 +8,7 @@ type Credentials struct {
 
 }
 
+type StatsRequest struct {
+	Filename string `json:"filename"`
+}
 
