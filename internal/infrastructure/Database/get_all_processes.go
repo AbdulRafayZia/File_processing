@@ -5,10 +5,10 @@ import(
 	"log"
 )
 
-func GetProcesses(claims *utils.MyClaims ) []utils.ProcessesResponse {
+func GetAllProcesses( ) []utils.ProcessesResponse {
 	db := OpenDB()
 	defer db.Close()
-	rows, err := db.Query("SELECT * FROM file_processing_data WHERE username = $1", claims.Username)
+	rows, err := db.Query("SELECT * FROM file_processing_data")
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -18,7 +18,7 @@ func GetRole(name string) (string, error) {
 		return "", fmt.Errorf("no role for this name")
 	} else if err != nil {
 
-		return "", fmt.Errorf("Error retrieving Role ")
+		return "", fmt.Errorf("error retrieving Role ")
 	}
 
 	return Role, nil
