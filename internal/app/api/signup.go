@@ -9,8 +9,6 @@ import (
 	database "github.com/AbdulRafayZia/Gorilla-mux/internal/infrastructure/Database"
 )
 
-
-
 func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 	// Parse request parameters
 	w.Header().Set("Content-Type", "application/json")
@@ -18,18 +16,16 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 
 	var request utils.Credentials
 	err := json.NewDecoder(r.Body).Decode(&request)
-	if err!=nil{
-		http.Error(w, "Unable to get data", http.StatusBadRequest)
+	if err != nil {
+		http.Error(w, "unable to get data", http.StatusBadRequest)
 	}
-	fmt.Printf("The user request value %v", request)
-
 
 	// Insert the user into the database
-	db:=database.OpenDB()
+	db := database.OpenDB()
 	defer db.Close()
 	_, err = db.Exec("INSERT INTO users (username, password) VALUES ($1, $2)", request.Username, request.Password)
 	if err != nil {
-		http.Error(w, "Unable to create user", http.StatusInternalServerError)
+		http.Error(w, "unable to create user", http.StatusInternalServerError)
 		return
 	}
 	// Respond with a success message

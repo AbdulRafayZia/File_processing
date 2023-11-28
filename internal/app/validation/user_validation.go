@@ -11,25 +11,25 @@ func CheckUserValidity(w http.ResponseWriter, r *http.Request, request utils.Cre
 	role, err := database.GetRole(request.Username)
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
-		http.Error(w, "Unauthozied username", http.StatusUnauthorized)
+		http.Error(w, "unauthozied username", http.StatusUnauthorized)
 		return false, err
 
 	}
 
 	validRole := CheckUserRole(role)
 	if !validRole {
-		http.Error(w, "Not a user", http.StatusUnauthorized)
+		http.Error(w, "not a user", http.StatusUnauthorized)
 		return false, err
 
 	}
 
 	user, err := database.FindByName(request.Username)
 	if err != nil {
-		http.Error(w, "Error finding user", http.StatusInternalServerError)
+		http.Error(w, "error finding user", http.StatusInternalServerError)
 		return false, err
 
 	}
-	hashedPassword, err := database.GetPassword(request.Username)
+	dbPassword, err := database.GetPassword(request.Username)
 	if err != nil {
 		http.Error(w, "error getting hashed password", http.StatusBadRequest)
 		return false, err
@@ -37,11 +37,11 @@ func CheckUserValidity(w http.ResponseWriter, r *http.Request, request utils.Cre
 	}
 
 	// Verify the password
-	validPassword := VerifyPassword(hashedPassword, request.Password)
+	validPassword := VerifyPassword(dbPassword, request.Password)
 	if !validPassword {
 
 		w.WriteHeader(http.StatusBadRequest)
-		http.Error(w, "Incorrect password", http.StatusUnauthorized)
+		http.Error(w, "incorrect password", http.StatusUnauthorized)
 		return false, err
 
 	}

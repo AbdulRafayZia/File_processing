@@ -3,6 +3,7 @@ package validation
 import (
 	"fmt"
 	"strings"
+
 	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
 	"github.com/dgrijalva/jwt-go"
 )
@@ -18,23 +19,23 @@ func VerifyToken(tokenString string) (*utils.MyClaims, error) {
 	// Check for errors
 	if err != nil {
 		if err == jwt.ErrSignatureInvalid {
-			fmt.Println("Invalid signature")
+			fmt.Println("invalid signature")
 		} else {
-			fmt.Println("Error parsing token:", err)
+			fmt.Println("error parsing token:", err)
 		}
 		return nil, err
 	}
 
 	// Check if the token is valid
 	if !token.Valid {
-		fmt.Println("Invalid token")
+		fmt.Println("invalid token")
 		return nil, err
 	}
 
 	// Extract claims
 	claims, ok := token.Claims.(*utils.MyClaims)
 	if !ok {
-		fmt.Println("Error extracting claims")
+		fmt.Println("error extracting claims")
 		return nil, err
 	}
 

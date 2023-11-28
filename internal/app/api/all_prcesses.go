@@ -10,8 +10,7 @@ import (
 	database "github.com/AbdulRafayZia/Gorilla-mux/internal/infrastructure/Database"
 )
 
-
-func GetAllProcesses(w http.ResponseWriter, r *http.Request){
+func GetAllProcesses(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	tokenString, err := service.GetToken(w, r)
@@ -31,7 +30,6 @@ func GetAllProcesses(w http.ResponseWriter, r *http.Request){
 	if !validRole {
 		http.Error(w, "Not a Staff Member", http.StatusUnauthorized)
 		return
-
 
 	}
 	record := database.GetAllProcesses()

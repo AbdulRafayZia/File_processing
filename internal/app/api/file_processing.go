@@ -24,7 +24,7 @@ func ProcessFile(w http.ResponseWriter, r *http.Request) {
 	claims, err := validation.VerifyToken(tokenString)
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
-		fmt.Fprint(w, "Could not Get Claims")
+		fmt.Fprint(w, "could not Get Claims")
 		return
 	}
 	responseBody, err := filehandle.GetFormData(w, r, claims)
@@ -38,7 +38,7 @@ func ProcessFile(w http.ResponseWriter, r *http.Request) {
 	err = database.InsertData(responseBody)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprint(w, "Failed to INSERT file Data")
+		fmt.Fprint(w, "failed to INSERT file Data")
 		fmt.Println(err)
 		return
 	}

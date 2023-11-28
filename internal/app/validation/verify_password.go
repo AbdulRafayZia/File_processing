@@ -2,12 +2,12 @@ package validation
 
 import "log"
 
-func VerifyPassword(hash, password string) bool {
+func VerifyPassword(dbPassword, password string) bool {
 
-	if hash == password {
+	if dbPassword == password {
 		return true
 	} else {
-		log.Printf("Error in verify hashed password:")
+		log.Printf("error in verify hashed password:")
 		return false
 	}
 

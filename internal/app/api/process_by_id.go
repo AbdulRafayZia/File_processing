@@ -9,7 +9,6 @@ import (
 	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/service"
 	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/validation"
 
-
 	database "github.com/AbdulRafayZia/Gorilla-mux/internal/infrastructure/Database"
 	"github.com/gorilla/mux"
 )
