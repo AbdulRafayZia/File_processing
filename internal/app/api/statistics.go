@@ -8,6 +8,7 @@ import (
 
 	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/service"
 	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
+	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/validation"
 	database "github.com/AbdulRafayZia/Gorilla-mux/internal/infrastructure/Database"
 )
 
@@ -28,14 +29,14 @@ func Statistics(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	Claims, err := service.VerifyToken(tokenString)
+	Claims, err := validation.VerifyToken(tokenString)
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
 		http.Error(w, " Could not get Claims ", http.StatusUnauthorized)
 
 		return
 	}
-	validrole := service.CheckStaffRole(Claims.Role)
+	validrole := validation.CheckStaffRole(Claims.Role)
 	if !validrole {
 		http.Error(w, "Not a Staff Member", http.StatusUnauthorized)
 		return

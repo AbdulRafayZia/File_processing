@@ -1,16 +1,16 @@
-package service
+package database
 
 import (
 	"database/sql"
 	"fmt"
 	"log"
-	database "github.com/AbdulRafayZia/Gorilla-mux/internal/infrastructure/Database"
+	
 
 )
 
 func GetPassword(username string) (string, error) {
 	var hashedPassword string
-	db := database.OpenDB()
+	db := OpenDB()
 	defer db.Close()
 	err := db.QueryRow("SELECT password FROM users WHERE username = $1", username).Scan(&hashedPassword)
 	if err == sql.ErrNoRows {

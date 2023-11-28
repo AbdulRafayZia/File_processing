@@ -7,6 +7,8 @@ import (
 	"net/http"
 
 	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/service"
+	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/validation"
+
 
 	database "github.com/AbdulRafayZia/Gorilla-mux/internal/infrastructure/Database"
 	"github.com/gorilla/mux"
@@ -23,7 +25,7 @@ func GetProcessById(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	claims, err := service.VerifyToken(tokenString)
+	claims, err := validation.VerifyToken(tokenString)
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
 		http.Error(w, " Could not get claims ", http.StatusUnauthorized)

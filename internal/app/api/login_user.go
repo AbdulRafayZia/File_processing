@@ -8,6 +8,7 @@ import (
 	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/service"
 	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
 	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/validation"
+	database "github.com/AbdulRafayZia/Gorilla-mux/internal/infrastructure/Database"
 )
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
@@ -15,7 +16,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	var request utils.Credentials
 	json.NewDecoder(r.Body).Decode(&request)
-	role, err := service.GetRole(request.Username)
+	role, err := database.GetRole(request.Username)
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
 		http.Error(w, "Unauthozied username", http.StatusUnauthorized)

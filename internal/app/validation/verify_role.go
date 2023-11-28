@@ -1,4 +1,4 @@
-package service
+package validation
 
 
 func CheckStaffRole(role string) bool {

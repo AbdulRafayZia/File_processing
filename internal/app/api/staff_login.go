@@ -2,57 +2,35 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 
 	"net/http"
 
 	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/service"
 	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
 	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/validation"
+	database "github.com/AbdulRafayZia/Gorilla-mux/internal/infrastructure/Database"
 )
 
 func StaffLogin(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	
 
 	var request utils.Credentials
 	json.NewDecoder(r.Body).Decode(&request)
 
-	role, err := service.GetRole(request.Username)
+	role, err := database.GetRole(request.Username)
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
 		http.Error(w, "Unauthozied username", http.StatusUnauthorized)
 
 		return
 	}
-	validRole := service.CheckStaffRole(role)
-	if !validRole {
-		http.Error(w, "Not a Staff Member", http.StatusUnauthorized)
-		return
 
-	}
-
-	user, err := service.FindByName(request.Username)
-	if err != nil {
-		http.Error(w, "Error finding user", http.StatusInternalServerError)
-		return
-	}
-	hashedPassword, err := service.GetPassword(request.Username)
-	if err != nil {
-		http.Error(w, "error in getting  from db", http.StatusBadRequest)
-		return
-	}
-
-	validPassword := validation.VerifyPassword(hashedPassword, request.Password)
-	if !validPassword {
-
-		w.WriteHeader(http.StatusBadRequest)
-		http.Error(w, "incorrect password ", http.StatusUnauthorized)
-		return
-
-	}
-	if user == nil && !validPassword && !validRole {
+	validStaf, err := validation.CheckStaffValidity(w, r, request)
+	if !validStaf {
 		w.WriteHeader(http.StatusUnauthorized)
-		http.Error(w, "invalid credentails ", http.StatusUnauthorized)
+		fmt.Println(err)
+		return
 
 	}
 
@@ -62,8 +40,8 @@ func StaffLogin(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "error in generating toke ", http.StatusInternalServerError)
 		return
 	}
-	
-	token:=utils.Token{
+
+	token := utils.Token{
 		Token: tokenString,
 	}
 	w.Header().Set("Content-Type", "application/json")
