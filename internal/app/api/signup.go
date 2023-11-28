@@ -9,12 +9,7 @@ import (
 	database "github.com/AbdulRafayZia/Gorilla-mux/internal/infrastructure/Database"
 )
 
-// type Users struct {
-// 	Name     string `json:"name"`
-// 	Password string `json: "password"`
-// 	Role string `json: "role"`
 
-// }
 
 func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 	// Parse request parameters
@@ -28,7 +23,6 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Printf("The user request value %v", request)
 
-	// Extract user information from the form
 
 	// Insert the user into the database
 	db:=database.OpenDB()

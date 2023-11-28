@@ -3,11 +3,11 @@ package api
 import (
 	"encoding/json"
 
-
 	"net/http"
 
 	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/service"
 	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
+	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/validation"
 )
 
 func StaffLogin(w http.ResponseWriter, r *http.Request) {
@@ -42,7 +42,7 @@ func StaffLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	validPassword := service.VerifyPassword(hashedPassword, request.Password)
+	validPassword := validation.VerifyPassword(hashedPassword, request.Password)
 	if !validPassword {
 
 		w.WriteHeader(http.StatusBadRequest)
