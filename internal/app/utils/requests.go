@@ -11,4 +11,6 @@ type Credentials struct {
 type StatsRequest struct {
 	Filename string `json:"filename"`
 }
-
+type Username struct{
+	Username string `json:"username"`
+}

@@ -27,7 +27,7 @@ type ProcessesResponse struct {
 }
 
 type ExecutionData struct {
-	AveragTime float64 `json:"average_execution_time"`
+	AveragTime float64 `json:"average_execution_seconds"`
 }
 
 type Token struct {

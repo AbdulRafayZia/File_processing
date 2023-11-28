@@ -17,6 +17,8 @@ func Routes() *mux.Router {
 	r.HandleFunc("/user/get_process/{id}", api.GetProcessById).Methods("GET")
 	r.HandleFunc("/staff/statistics", api.Statistics).Methods("POST")
 	r.HandleFunc("/staff/get_all_processes", api.GetAllProcesses).Methods("GET")
+	r.HandleFunc("/staff/get_processes_by_username", api.GetProcessByName).Methods("POST")
+
 
 	return r
 
