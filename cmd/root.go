@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	"fmt"
@@ -9,8 +9,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func main() {
-
+func Execute() {
 	r := routes.Routes()
 	port := 8080
 	fmt.Printf("Server listening on :%d...\n", port)
@@ -22,4 +21,5 @@ func main() {
 	http.ListenAndServe(":8080", handlers.CORS(originsOk, headersOk, methodsOk)(r))
 
 	http.ListenAndServe(fmt.Sprintf(":%d", port), r)
+
 }
