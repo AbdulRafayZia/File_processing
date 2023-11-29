@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	database "github.com/AbdulRafayZia/Gorilla-mux/internal/infrastructure/Database"
-
-	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
+	"github.com/AbdulRafayZia/Gorilla-mux/utils"
+	// "github.com/AbdulRafayZia/Gorilla-mux/utils"
 )
 
 func CheckStaffValidity(w http.ResponseWriter, r *http.Request, request utils.Credentials) (bool, error) {

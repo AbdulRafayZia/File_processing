@@ -3,12 +3,13 @@ package jwt
 import (
 	"time"
 
-	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
+	
+	"github.com/AbdulRafayZia/Gorilla-mux/utils"
 	"github.com/dgrijalva/jwt-go"
 )
 
 func CreateToken(username string, role string) (string,string, error) {
-	accessTokenExpiration := time.Now().Add(15 * time.Minute).Unix()
+	accessTokenExpiration := time.Now().Add(1 * time.Minute).Unix()
 	refreshTokenExpiration := time.Now().Add(7 * 24 * time.Hour).Unix()
 
 	accesstoken := jwt.NewWithClaims(jwt.SigningMethodHS256,

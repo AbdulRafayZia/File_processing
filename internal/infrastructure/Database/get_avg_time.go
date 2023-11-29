@@ -1,7 +1,7 @@
 package database
 
 import (
-	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
+	"github.com/AbdulRafayZia/Gorilla-mux/utils"
 )
 
 func GetAvergeExeTime(request utils.StatsRequest) (utils.ExecutionData, error) {

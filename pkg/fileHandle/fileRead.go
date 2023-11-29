@@ -5,7 +5,7 @@ import (
 	"io"
 	"mime/multipart"
 
-	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
+	"github.com/AbdulRafayZia/Gorilla-mux/utils"
 )
 
 func ReadFile(username string, file multipart.File, routines int) (utils.Summary, error) {

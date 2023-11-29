@@ -1,17 +1,15 @@
 package filehandle
-import (
 
+import (
 	"fmt"
+	"net/http"
 	"strconv"
 	"time"
-	"net/http"
 
-	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
-	
-
+	"github.com/AbdulRafayZia/Gorilla-mux/utils"
 )
 
-func GetFormData(w http.ResponseWriter, r *http.Request , claims *utils.MyClaims)(utils.ResponseBody , error){
+func GetFormData(w http.ResponseWriter, r *http.Request, claims *utils.MyClaims) (utils.ResponseBody, error) {
 	startTime := time.Now()
 
 	err := r.ParseMultipartForm(10000 << 20) // 10000 MB max file size
@@ -28,7 +26,6 @@ func GetFormData(w http.ResponseWriter, r *http.Request , claims *utils.MyClaims
 		http.Error(w, "Invalid routines value", http.StatusBadRequest)
 		return utils.ResponseBody{}, err
 
-
 	}
 	fmt.Printf("routienes :%d\n", routines)
 
@@ -37,7 +34,6 @@ func GetFormData(w http.ResponseWriter, r *http.Request , claims *utils.MyClaims
 	if err != nil {
 		http.Error(w, "Failed to get file from form data", http.StatusBadRequest)
 		return utils.ResponseBody{}, err
-
 
 	}
 	defer file.Close()
@@ -49,7 +45,6 @@ func GetFormData(w http.ResponseWriter, r *http.Request , claims *utils.MyClaims
 		return utils.ResponseBody{}, err
 
 	}
-	fmt.Println(claims.Username)
 
 	endTime := time.Now()
 	// Calculate the execution time
@@ -65,6 +60,5 @@ func GetFormData(w http.ResponseWriter, r *http.Request , claims *utils.MyClaims
 		Filename:         FileHeader.Filename,
 		Username:         claims.Username,
 	}
-	fmt.Printf("Execution time: %v\n", executionTime)
-	return  responseBody,  nil
+	return responseBody, nil
 }

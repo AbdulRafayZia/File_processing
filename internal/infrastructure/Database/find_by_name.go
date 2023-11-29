@@ -3,11 +3,8 @@ package database
 import (
 	"database/sql"
 
-	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
-
-
-	
-
+	"github.com/AbdulRafayZia/Gorilla-mux/utils"
+	// "github.com/AbdulRafayZia/Gorilla-mux/utils"
 )
 
 func FindByName(username string) (*utils.Credentials, error) {

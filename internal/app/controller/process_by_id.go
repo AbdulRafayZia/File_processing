@@ -1,4 +1,4 @@
-package api
+package controller
 
 import (
 	"encoding/json"
@@ -6,8 +6,8 @@ import (
 
 	"net/http"
 
-	"github.com/AbdulRafayZia/Gorilla-mux/pkg/jwt"
 	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/validation"
+	"github.com/AbdulRafayZia/Gorilla-mux/pkg/jwt"
 
 	database "github.com/AbdulRafayZia/Gorilla-mux/internal/infrastructure/Database"
 	"github.com/gorilla/mux"

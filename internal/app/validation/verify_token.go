@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
+	"github.com/AbdulRafayZia/Gorilla-mux/utils"
 	"github.com/dgrijalva/jwt-go"
 )
 

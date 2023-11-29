@@ -3,7 +3,7 @@ package validation
 import (
 	"net/http"
 
-	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
+	"github.com/AbdulRafayZia/Gorilla-mux/utils"
 	database "github.com/AbdulRafayZia/Gorilla-mux/internal/infrastructure/Database"
 )
 

@@ -3,7 +3,7 @@ package database
 import (
 
 
-	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
+	"github.com/AbdulRafayZia/Gorilla-mux/utils"
 )
 
 func GetProcessesByUserName( username string) ([]utils.ProcessesResponse , error) {

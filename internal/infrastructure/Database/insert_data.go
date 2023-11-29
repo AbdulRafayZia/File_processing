@@ -3,7 +3,7 @@ package database
 import (
 	"fmt"
 
-	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
+	"github.com/AbdulRafayZia/Gorilla-mux/utils"
 )
 
 func InsertData(responseBody utils.ResponseBody) error {

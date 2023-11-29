@@ -1,12 +1,12 @@
-package api
+package controller
 
 import (
 	"encoding/json"
 	"fmt"
 	"net/http"
 
-	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
 	database "github.com/AbdulRafayZia/Gorilla-mux/internal/infrastructure/Database"
+	"github.com/AbdulRafayZia/Gorilla-mux/utils"
 )
 
 func CreateUserHandler(w http.ResponseWriter, r *http.Request) {

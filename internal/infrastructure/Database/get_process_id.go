@@ -3,7 +3,7 @@ package database
 import (
 
 
-	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
+	"github.com/AbdulRafayZia/Gorilla-mux/utils"
 )
 
 func GetProcessesById(claims *utils.MyClaims, id string) ([]utils.ProcessesResponse , error) {

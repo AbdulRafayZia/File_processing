@@ -1,14 +1,13 @@
-package api
+package controller
 
 import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-
-	"github.com/AbdulRafayZia/Gorilla-mux/pkg/jwt"
-	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
 	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/validation"
 	database "github.com/AbdulRafayZia/Gorilla-mux/internal/infrastructure/Database"
+	"github.com/AbdulRafayZia/Gorilla-mux/pkg/jwt"
+	"github.com/AbdulRafayZia/Gorilla-mux/utils"
 )
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
@@ -32,7 +31,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	accessToken,refreshToken, err := jwt.CreateToken(request.Username, role)
+	accessToken, refreshToken, err := jwt.CreateToken(request.Username, role)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		http.Error(w, "error in generating toke ", http.StatusInternalServerError)
@@ -40,7 +39,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	token := utils.Token{
-		AccessToken:accessToken ,
+		AccessToken:  accessToken,
 		RefreshToken: refreshToken,
 	}
 	w.Header().Set("Content-Type", "application/json")

@@ -3,8 +3,7 @@ package filehandle
 import (
 	"sync"
 
-	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/utils"
-
+	"github.com/AbdulRafayZia/Gorilla-mux/utils"
 )
 
 func ProcessFile(fileData string, routines int) utils.Summary {
