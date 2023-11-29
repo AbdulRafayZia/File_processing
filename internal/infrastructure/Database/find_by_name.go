@@ -3,13 +3,14 @@ package database
 import (
 	"database/sql"
 
+	"github.com/AbdulRafayZia/Gorilla-mux/dbinit"
 	"github.com/AbdulRafayZia/Gorilla-mux/utils"
-	// "github.com/AbdulRafayZia/Gorilla-mux/utils"
+	
 )
 
 func FindByName(username string) (*utils.Credentials, error) {
 	var user utils.Credentials
-	db := OpenDB()
+	db := dbinit.OpenDB()
 	defer db.Close()
 	err := db.QueryRow("SELECT id, username, password FROM users WHERE username = $1", username).Scan(&user.ID, &user.Username, &user.Password)
 	if err == sql.ErrNoRows {

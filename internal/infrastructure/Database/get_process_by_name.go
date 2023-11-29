@@ -1,13 +1,13 @@
 package database
 
 import (
-
-
+	"github.com/AbdulRafayZia/Gorilla-mux/dbinit"
 	"github.com/AbdulRafayZia/Gorilla-mux/utils"
 )
 
 func GetProcessesByUserName( username string) ([]utils.ProcessesResponse , error) {
-	db := OpenDB()
+	db := dbinit.OpenDB()
+
 	defer db.Close()
 	rows, err := db.Query("SELECT * FROM file_processing_data WHERE username = $1 ", username)
 	if err != nil {

@@ -20,14 +20,17 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "unable to get data", http.StatusBadRequest)
 	}
 
-	// Insert the user into the database
-	db := database.OpenDB()
-	defer db.Close()
-	_, err = db.Exec("INSERT INTO users (username, password) VALUES ($1, $2)", request.Username, request.Password)
+	//extract data from request
+	username := request.Username
+	password := request.Password
+
+	//Insert into database
+	err = database.CreateUser(username, password)
 	if err != nil {
 		http.Error(w, "unable to create user", http.StatusInternalServerError)
 		return
 	}
+
 	// Respond with a success message
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "User created successfully")

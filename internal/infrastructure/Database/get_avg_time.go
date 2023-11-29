@@ -1,11 +1,13 @@
 package database
 
 import (
+	"github.com/AbdulRafayZia/Gorilla-mux/dbinit"
 	"github.com/AbdulRafayZia/Gorilla-mux/utils"
 )
 
 func GetAvergeExeTime(request utils.StatsRequest) (utils.ExecutionData, error) {
-	db := OpenDB()
+	db := dbinit.OpenDB()
+
 	defer db.Close()
 
 	rows, err := db.Query("SELECT AVG(execution_time) FROM file_processing_data WHERE filename = $1", request.Filename)

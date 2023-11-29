@@ -4,12 +4,14 @@ import (
 	"database/sql"
 	"fmt"
 
+	"github.com/AbdulRafayZia/Gorilla-mux/dbinit"
 )
 
 func GetRole(name string) (string, error) {
 	var Role string
 
-	db := OpenDB()
+	db := dbinit.OpenDB()
+
 	defer db.Close()
 
 	err := db.QueryRow("SELECT role FROM users WHERE username = $1", name).Scan(&Role)
