@@ -6,7 +6,7 @@ import (
 
 	"net/http"
 
-	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/service"
+	"github.com/AbdulRafayZia/Gorilla-mux/pkg/jwt"
 	"github.com/AbdulRafayZia/Gorilla-mux/internal/app/validation"
 
 	database "github.com/AbdulRafayZia/Gorilla-mux/internal/infrastructure/Database"
@@ -17,7 +17,7 @@ func GetProcessById(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id := params["id"]
 
-	tokenString, err := service.GetToken(w, r)
+	tokenString, err := jwt.GetToken(w, r)
 	if tokenString == "" || err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
 		http.Error(w, "authorized token is not given", http.StatusUnauthorized)

@@ -31,5 +31,7 @@ type ExecutionData struct {
 }
 
 type Token struct {
-	Token string `json:"token"`
+	AccessToken string `json:"acessToken"`
+	RefreshToken string `json:"refreshToken"`
+
 }
