@@ -1,62 +1,30 @@
 package dbinit
 
-
-
 import (
 	"database/sql"
 	"fmt"
 	"log"
-	"os"
-	"strconv"
-
-	_ "github.com/lib/pq"
 )
 
-func OpenDB() *sql.DB {
+func Init() {
+	// Connect to PostgreSQL server to run queries before database creation
+	connInif := fmt.Sprintf("host=%s port=%d user=%s password=%s sslmode=disable", host, port, user, password)
 
-	host := getEnv("DB_HOST", "localhost")
-	port := getEnvInt("DB_PORT", 5432)
-	user := getEnv("DB_USER", "postgres")
-	password := getEnv("DB_PASSWORD", "1234567890")
-	dbname := getEnv("DB_NAME", "mywebapp")
-	connStr := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-		host, port, user, password, dbname)
-
-	db, err := sql.Open("postgres", connStr)
+	tempDB, err := sql.Open("postgres", connInif)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// Check if the connection to the database is successful
-	err = db.Ping()
+	defer tempDB.Close()
+
+	// Run your queries here
+	_, err = tempDB.Exec("CREATE EXTENSION IF NOT EXISTS " + dbname+ ";")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	return db
+	// Other queries as needed
+
+	// Assign the temporary DB to the global variable for later use
+	
 }
-
-// var db *sql.DB
-
-func getEnv(key, defaultValue string) string {
-	value, exists := os.LookupEnv(key)
-	if !exists {
-		return defaultValue
-	}
-	return value
-}
-
-func getEnvInt(key string, defaultValue int) int {
-	strValue := getEnv(key, "")
-	if strValue == "" {
-		return defaultValue
-	}
-	value, err := strconv.Atoi(strValue)
-	if err != nil {
-		log.Printf("Error converting %s to integer: %v", key, err)
-		return defaultValue
-	}
-	return value
-}
-
-
