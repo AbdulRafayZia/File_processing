@@ -154,4 +154,4 @@ This API uses JSON Web Tokens (JWT) for authentication. All endpoints requiring 
 
 ## License
 
-This project is licensed under the [License Name] License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the MIT License 
