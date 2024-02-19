@@ -149,9 +149,8 @@ This API uses JSON Web Tokens (JWT) for authentication. All endpoints requiring 
 
 ## Contributors
 
-- [Your Name]
-- [Contributor 1]
-- [Contributor 2]
+- Abdul Rafay Zia
+
 
 ## License
 
