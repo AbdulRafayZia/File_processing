@@ -1,157 +1,116 @@
 # File Processor API
 
-This project implements an API for processing files, providing endpoints for user and staff functionalities.
+This is an API designed for processing files, with endpoints for user and staff functionalities. It allows users to process files, login, and sign up, while staff members can access statistics and retrieve all processes.
 
-## Getting Started
+## Technologies Used
+- **Language:** Go (Golang)
+- **OpenAPI Specification:** 3.0.3
+- **Dependencies:** Standard Go libraries
 
-To get started with this project, follow these steps:
-
-1. Clone the repository.
-2. Install the necessary dependencies.
-3. Run the project locally.
-4. Explore the API endpoints.
-
-## Installation
-
-To install the necessary dependencies, use the following command:
-
-```bash
-npm install
-```
-
-## Running the Project
-
-To run the project locally, execute the following command:
-
-```bash
-npm start
-```
-
-The API will be accessible at `http://localhost:8080`.
-
-## API Endpoints
+## Endpoints
 
 ### User Endpoints
 
-#### User Signup
-
-- **Endpoint:** `/user/signup`
+#### 1. Process a File
 - **Method:** POST
-- **Description:** Allows users to sign up.
+- **Path:** `/fileProcess`
+- **Description:** Process a file with specified routines.
 - **Request Body:**
-  ```json
-  {
-    "username": "string",
-    "password": "string"
-  }
-  ```
-- **Responses:**
-  - 200: User created successfully
+  - `file`: The file to be processed (multipart/form-data)
+  - `routines`: Type of routines to apply to the file (string)
+- **Response:**
+  - `Total_lines`: Number of lines in the file
+  - `Total_words`: Number of words in the file
+  - `Total_punctuations`: Number of punctuations in the file
+  - `Total_vowels`: Number of vowels in the file
+  - `Execution_Time`: Time taken for execution
+  - `No_of_Routines`: Number of routines applied
+  - `file_name`: Name of the processed file
+  - `username`: Username of the user who processed the file
 
-#### User Login
-
-- **Endpoint:** `/user/login`
+#### 2. User Login
 - **Method:** POST
-- **Description:** Allows users to log in.
+- **Path:** `/user/login`
+- **Description:** Authenticate user login.
 - **Request Body:**
-  ```json
-  {
-    "username": "string",
-    "password": "string"
-  }
-  ```
-- **Responses:**
-  - 200: Successful operation
-  - Response body contains a JWT token for authentication.
+  - `username`: Username of the user (string)
+  - `password`: Password of the user (string)
+- **Response:**
+  - `token`: JWT token for authentication
 
-#### Process a File
-
-- **Endpoint:** `/fileProcess`
+#### 3. User Signup
 - **Method:** POST
-- **Description:** Processes a file.
-- **Request Body:** Form data with a file and routines.
-- **Responses:**
-  - 200: Successful operation
-  - Response body contains processed file information.
+- **Path:** `/user/signup`
+- **Description:** Register a new user.
+- **Request Body:**
+  - `username`: Username of the user (string)
+  - `password`: Password of the user (string)
+- **Response:**
+  - `"User created successfully"` (string)
 
-#### Get User Processes
-
-- **Endpoint:** `/user/user_processes`
+#### 4. Get User Processes
 - **Method:** GET
-- **Description:** Retrieves processes associated with the user.
-- **Responses:**
-  - 200: Successful operation
-  - Response body contains a list of user processes.
+- **Path:** `/user/user_processes`
+- **Description:** Get processes associated with the authenticated user.
+- **Response:**
+  - List of processed files with details including ID, username, file name, metrics, and execution time.
 
-#### Get User Process by ID
-
-- **Endpoint:** `/user/get_process/{processId}`
+#### 5. Get User Process by ID
 - **Method:** GET
-- **Description:** Retrieves a user process by ID.
-- **Parameters:**
-  - `processId`: ID of the process to retrieve
-- **Responses:**
-  - 200: Successful operation
-  - Response body contains the user process.
+- **Path:** `/user/get_process/{processId}`
+- **Description:** Get a specific process by its ID.
+- **Request Parameter:**
+  - `processId`: ID of the process to retrieve (integer)
+- **Response:**
+  - Details of the specified process including ID, username, file name, metrics, and execution time.
 
 ### Staff Endpoints
 
-#### Staff Login
-
-- **Endpoint:** `/staff/staffLogin`
+#### 1. Staff Login
 - **Method:** POST
-- **Description:** Allows staff members to log in.
+- **Path:** `/staff/staffLogin`
+- **Description:** Authenticate staff login.
 - **Request Body:**
-  ```json
-  {
-    "username": "string",
-    "password": "string"
-  }
-  ```
-- **Responses:**
-  - 200: Successful operation
-  - Response body contains a JWT token for authentication.
+  - `username`: Username of the staff (string)
+  - `password`: Password of the staff (string)
+- **Response:**
+  - `token`: JWT token for authentication
 
-#### Get Statistics for a File
-
-- **Endpoint:** `/staff/statistics`
+#### 2. Get Statistics for a File
 - **Method:** POST
-- **Description:** Retrieves statistics for a file.
+- **Path:** `/staff/statistics`
+- **Description:** Get statistics for a specific file.
 - **Request Body:**
-  ```json
-  {
-    "filename": "string"
-  }
-  ```
-- **Responses:**
-  - 200: Successful operation
-  - Response body contains file statistics.
+  - `filename`: Name of the file to get statistics for (string)
+- **Response:**
+  - `average_execution_time`: Average execution time for the file processing
 
-#### Get All Staff Processes
-
-- **Endpoint:** `/staff/get_all_processes`
+#### 3. Get All Staff Processes
 - **Method:** GET
-- **Description:** Retrieves all processes handled by staff members.
-- **Responses:**
-  - 200: Successful operation
-  - Response body contains a list of staff processes.
+- **Path:** `/staff/get_all_processes`
+- **Description:** Get all processes handled by staff members.
+- **Response:**
+  - List of processed files with details including ID, username, file name, metrics, and execution time.
 
 ## Security
+- **Bearer Token Authentication:** JWT tokens are used for authentication. Users and staff members must include a valid token in the request headers to access protected endpoints.
 
-This API uses JSON Web Tokens (JWT) for authentication. All endpoints requiring authentication expect the token to be provided in the `Authorization` header as a Bearer token.
+## Setup
+1. Clone the repository.
+2. Install Go if not already installed.
+3. Install dependencies if required.
+4. Build and run the application.
 
-## Technologies Used
+## Usage
+- Ensure to have valid JWT tokens for accessing user and staff endpoints.
+- Use appropriate endpoints for file processing, user management, and staff functionalities.
 
-- OpenAPI 3.0.3
-- Node.js
-- Express
-- JWT for authentication
-
-## Contributors
-
-- Abdul Rafay Zia
-
+## Contributing
+Contributions are welcome! Please fork the repository and create a pull request with your changes.
 
 ## License
+This project is licensed under the [MIT License](LICENSE).
 
-This project is licensed under the MIT License 
+---
+
+Feel free to customize this README according to your project's specific needs and features. If you have any questions or need further assistance, please let me know!
